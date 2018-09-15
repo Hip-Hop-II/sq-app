@@ -8,10 +8,11 @@ import {TabView, PagerScroll, SceneMap, TabBar} from 'react-native-tab-view'
 import colors from '../utils/colors'
 import First from '../contains/First'
 import Second from '../contains/Second'
+import {Container, Header, Left, Button, Icon, Body, Title, Right} from 'native-base'
 
 class HomeScreen extends Component {
   static navigationOptions = ({navigation}) => ({
-    title: '首汽约车'
+    header: null
   })
   state = {
     index: 0,
@@ -26,8 +27,18 @@ class HomeScreen extends Component {
   }
   render() {
     return (
-      <View style={styles.container}>
-        <Text>hello home!!!</Text>
+      <Container style={styles.container}>
+        <Header>
+        <Left>
+            <Button transparent onPress={() => this.props.navigation.navigate('User')}>
+              <Icon name='contact' style={{color: '#222'}} />
+            </Button>
+          </Left>
+          <Body>
+            <Title>首汽约车</Title>
+          </Body>
+          <Right></Right>
+        </Header>
         <TabView 
           navigationState={this.state}
           renderScene={
@@ -54,7 +65,7 @@ class HomeScreen extends Component {
             />
           }
         />
-      </View>
+      </Container>
     )
   }
 }
