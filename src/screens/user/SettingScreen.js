@@ -3,6 +3,7 @@ import {
   StyleSheet
 } from 'react-native'
 import {Container, Content, List, ListItem, Icon, Left, Right, Text, Body, Button} from 'native-base'
+import colors from '../../utils/colors'
 
 class SettingScreen extends Component {
   static navigationOptions = {
@@ -57,16 +58,16 @@ class SettingScreen extends Component {
             </ListItem>
             <ListItem itemDivider>
             </ListItem>    
-            <ListItem >
+            <ListItem button onPress={() => this.props.navigation.navigate('Logout')}>
               <Body>
-                <Text>账号安全</Text>
+                <Text>注销账号</Text>
               </Body>
               <Right>
                 <Icon name="arrow-forward" />
               </Right>
             </ListItem>
             </List>
-            <Button full danger style={styles.logoutButton}>
+            <Button full danger style={styles.signupButton}>
               <Text>退出登录</Text>
             </Button>
         </Content>
@@ -76,9 +77,12 @@ class SettingScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  signupButton: {
+    marginTop: 40
+  },
   logoutButton: {
-    position: 'relative',
-    top: 40
+    marginTop: 10,
+    backgroundColor: colors.GRAY1
   }
 })
 
