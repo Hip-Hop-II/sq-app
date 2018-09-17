@@ -11,7 +11,7 @@ export default App = createStackNavigator({
     screen: HomeScreen
   },
   User: {
-    screen: UserScreen
+    getScreen: () => require('../screens/UserScreen').default
   },
   Stroke: {
     screen: StrokeScreen
