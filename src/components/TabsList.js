@@ -1,51 +1,72 @@
 import React, { PureComponent } from 'react'
-import { Text, View, StyleSheet, UIManager, findNodeHandle } from 'react-native'
+import { Text, View, StyleSheet, Animated } from 'react-native'
 import TabItem from './TabItem'
 import {colors} from '../utils/colors'
+import PropTypes from 'prop-types'
 
 const tabbarWidth = 30
 
 export default class TabsList extends PureComponent {
+  static propTypes = {
+    tabbarStyle: PropTypes.object
+  }
   constructor (props) {
     super(props)
     this.state = {
       currentIndex: 0,
-      tabBarLeft: 0
+      tabBarLeft: new Animated.Value(0)
     }
+    this.tabsArray = []
     this.tabs = React.createRef()
   }
 
-  componentDidMount () {
-    console.log(this.tabs);
-    UIManager.measure(findNodeHandle(this.tabs.current.props.children[0][0]),(x,y,width,height,pageX,pageY)=>{
-      //todo
-    })
+  animateTabbar = (value) => {
+    Animated.timing(this.state.tabBarLeft, {
+      toValue: value,
+      duration: 300
+    }).start()
   }
+  // 初始化 组件的位置
   itemLayout = (item = {}) => {
-    console.log(item)
-    if (item.width) {
-      this.setState({
-        tabBarLeft: this.calcTabBarLeft(item)
-      })
+    const currentIndex = this.tabsArray.findIndex(el => el.id === item.id)
+    if (currentIndex === -1) {
+      this.tabsArray.push(item)
+    }
+    const value = this.tabsArray.find(el => el.id === 1)
+    if (value) {
+      this.animateTabbar(this.calcTabBarLeft(value))
+    }
+  }
+  // 计算 tabbar left 的值
+  calcTabBarLeft = item => {
+    const {tabbarStyle} = this.props
+    return item.width / 2 + item.x - (tabbarStyle && tabbarStyle.width || tabbarWidth) / 2
+  }
+
+  tabItemPress = (item, index, id) => {
+    console.log(index)
+    if (index !== this.state.currentIndex) {
+      this.setState({currentIndex: index})
+      this.animateTabbar(this.calcTabBarLeft(this.tabsArray.find(el => el.id === id)))
     }
   }
 
-  calcTabBarLeft = item => {
-    return item.width / 2 + item.x - tabbarWidth / 2;
-  }
-
   render() {
-    const {tabs} = this.props
+    const {tabs, tabbarStyle, style} = this.props
+    const {currentIndex, tabBarLeft} = this.state
     return (
-      <View style={styles.wrapper} ref={this.tabs} >
+      <View style={[styles.wrapper, style]} ref={this.tabs} >
         {tabs.map((item, index) => (
           <TabItem {...item} key={index} ref="tabItem" 
           onLayout={this.itemLayout}
+          activeIndex={currentIndex}
+          index={index}
+          onPress={(id) => this.tabItemPress(item, index, id)}
           />
         ))}
-        <View style={[styles.tabBar, {left: this.state.tabBarLeft}]}>
+        <Animated.View style={[styles.tabBar, {left: tabBarLeft}, tabbarStyle]}>
 
-        </View>
+        </Animated.View>
       </View>
     )
   }
@@ -69,4 +90,4 @@ const styles = StyleSheet.create({
     borderRadius: 1,
     bottom: 0
   }
-});
+})

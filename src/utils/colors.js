@@ -9,5 +9,7 @@ export const colors = {
   greenLight: '#4C585C',
   greenLighter: '#d8d8d8',
   greyLight: '#f5f5f5',
-  redLight: '#F03B35'
+  redLight: '#F03B35',
+  grey4: '#a0a0a0',
+  blueLight: '#04BBBF'
 }

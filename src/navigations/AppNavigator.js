@@ -1,20 +1,20 @@
-import { createStackNavigator, createSwitchNavigator } from "react-navigation";
-import React from "react";
+import { createStackNavigator, createSwitchNavigator } from "react-navigation"
+import React from "react"
 
-import HomeScreen from "../screens/HomeScreen";
-import UserScreen from "../screens/UserScreen";
-import StrokeScreen from "../screens/stroke/StrokeScreen";
-import SettingScreen from "../screens/user/SettingScreen";
-import LogoutScreen from "../screens/user/LogoutScreen";
-import HeaderButton from "../components/buttons/HeaderButton";
-import { Ionicons } from "@expo/vector-icons";
-import { colors } from "../utils/colors";
+import HomeScreen from "../screens/HomeScreen"
+import UserScreen from "../screens/UserScreen"
+import StrokeScreen from "../screens/stroke/StrokeScreen"
+import SettingScreen from "../screens/user/SettingScreen"
+import LogoutScreen from "../screens/user/LogoutScreen"
+import HeaderButton from "../components/buttons/HeaderButton"
+import { Ionicons } from "@expo/vector-icons"
+import { colors } from "../utils/colors"
 
 const AuthNavigator = createStackNavigator({
   Signin: {
     getScreen: () => require("../screens/SigninScreen").default
   }
-});
+})
 
 // 行程
 const StrokeNavigator = createStackNavigator(
@@ -36,7 +36,7 @@ const StrokeNavigator = createStackNavigator(
       )
     })
   }
-);
+)
 
 const UserNavigator = createStackNavigator(
   {
@@ -69,7 +69,7 @@ const UserNavigator = createStackNavigator(
       )
     })
   }
-);
+)
 
 const MainNavigator = createStackNavigator({
   User: {
@@ -81,7 +81,7 @@ const MainNavigator = createStackNavigator({
   Home: {
     getScreen: () => require("../screens/HomeScreen").default
   }
-});
+})
 
 export default (App = createSwitchNavigator(
   {
@@ -91,4 +91,4 @@ export default (App = createSwitchNavigator(
   {
     initialRouteName: "Main"
   }
-));
+))
