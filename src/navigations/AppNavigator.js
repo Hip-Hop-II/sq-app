@@ -1,27 +1,94 @@
-import {createStackNavigator} from 'react-navigation'
+import { createStackNavigator, createSwitchNavigator } from "react-navigation";
+import React from "react";
 
-import HomeScreen from '../screens/HomeScreen'
-import UserScreen from '../screens/UserScreen'
-import StrokeScreen from '../screens/user/StrokeScreen'
-import SettingScreen from '../screens/user/SettingScreen'
-import LogoutScreen from '../screens/user/LogoutScreen'
+import HomeScreen from "../screens/HomeScreen";
+import UserScreen from "../screens/UserScreen";
+import StrokeScreen from "../screens/stroke/StrokeScreen";
+import SettingScreen from "../screens/user/SettingScreen";
+import LogoutScreen from "../screens/user/LogoutScreen";
+import HeaderButton from "../components/buttons/HeaderButton";
+import { Ionicons } from "@expo/vector-icons";
+import { colors } from "../utils/colors";
 
-export default App = createStackNavigator({
-  Home: {
-    screen: HomeScreen
-  },
-  User: {
-    getScreen: () => require('../screens/UserScreen').default
-  },
-  Stroke: {
-    screen: StrokeScreen
-  },
-  Setting: {
-    screen: SettingScreen
-  },
-  Logout: {
-    screen: LogoutScreen
+const AuthNavigator = createStackNavigator({
+  Signin: {
+    getScreen: () => require("../screens/SigninScreen").default
   }
-}, {
-  initialRouteName: 'Home'
-})
+});
+
+// 行程
+const StrokeNavigator = createStackNavigator(
+  {
+    Stroke: {
+      getScreen: () => require("../screens/stroke/StrokeScreen").default
+    }
+  },
+  {
+    navigationOptions: ({ navigation }) => ({
+      headerLeft: (
+        <HeaderButton left onPress={() => navigation.goBack(null)}>
+          <Ionicons
+            name="ios-arrow-round-back-outline"
+            size={35}
+            color={colors.greyDark}
+          />
+        </HeaderButton>
+      )
+    })
+  }
+);
+
+const UserNavigator = createStackNavigator(
+  {
+    User: {
+      getScreen: () => require("../screens/UserScreen").default
+    },
+    Setting: {
+      getScreen: () => require("../screens/user/SettingScreen").default
+    },
+    Logout: {
+      getScreen: () => require("../screens/user/LogoutScreen").default
+    },
+    Stroke: {
+      screen: StrokeNavigator,
+      navigationOptions: {
+        header: null
+      }
+    }
+  },
+  {
+    navigationOptions: ({ navigation }) => ({
+      headerLeft: (
+        <HeaderButton left onPress={() => navigation.goBack(null)}>
+          <Ionicons
+            name="ios-arrow-round-back-outline"
+            size={35}
+            color={colors.greyDark}
+          />
+        </HeaderButton>
+      )
+    })
+  }
+);
+
+const MainNavigator = createStackNavigator({
+  User: {
+    screen: UserNavigator,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Home: {
+    getScreen: () => require("../screens/HomeScreen").default
+  }
+});
+
+export default (App = createSwitchNavigator(
+  {
+    Auth: AuthNavigator,
+    Main: MainNavigator
+  },
+  {
+    initialRouteName: "Main"
+  }
+));
