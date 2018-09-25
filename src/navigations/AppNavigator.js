@@ -5,6 +5,7 @@ import UserScreen from '../screens/UserScreen'
 import StrokeScreen from '../screens/user/StrokeScreen'
 import SettingScreen from '../screens/user/SettingScreen'
 import LogoutScreen from '../screens/user/LogoutScreen'
+import LoginScreen from '../screens/user/LoginScreen'
 
 export default App = createStackNavigator({
   Home: {
@@ -18,6 +19,9 @@ export default App = createStackNavigator({
   },
   Setting: {
     screen: SettingScreen
+  },
+  Login: {
+    screen: LoginScreen
   },
   Logout: {
     screen: LogoutScreen
