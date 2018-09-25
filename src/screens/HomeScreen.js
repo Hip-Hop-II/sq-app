@@ -5,14 +5,23 @@ import {
   StyleSheet
 } from 'react-native'
 import {TabView, PagerScroll, SceneMap, TabBar} from 'react-native-tab-view'
-import colors from '../utils/colors'
+import HeaderButton from '../components/buttons/HeaderButton'
+import { FontAwesome, Ionicons} from '@expo/vector-icons'
+import {colors} from '../utils/colors'
 import First from '../contains/First'
 import Second from '../contains/Second'
-import {Container, Header, Left, Button, Icon, Body, Title, Right} from 'native-base'
 
 class HomeScreen extends Component {
   static navigationOptions = ({navigation}) => ({
-    header: null
+    title: '北京',
+    headerLeft: <HeaderButton left onPress={() => navigation.navigate('User')}>
+      <FontAwesome name="user" size={26} color={colors.greyDark} />
+    </HeaderButton>,
+    headerRight: (
+      <HeaderButton right onPress={() => navigation.navigate('User')}>
+        <Ionicons name="ios-notifications-outline" size={26} color={colors.greyDark} />
+      </HeaderButton>
+    )
   })
   state = {
     index: 0,
@@ -27,18 +36,7 @@ class HomeScreen extends Component {
   }
   render() {
     return (
-      <Container style={styles.container}>
-        <Header>
-        <Left>
-            <Button transparent onPress={() => this.props.navigation.navigate('User')}>
-              <Icon name='contact' style={{color: '#222'}} />
-            </Button>
-          </Left>
-          <Body>
-            <Title>首汽约车</Title>
-          </Body>
-          <Right></Right>
-        </Header>
+      <View style={styles.container}>
         <TabView 
           navigationState={this.state}
           renderScene={
@@ -58,14 +56,13 @@ class HomeScreen extends Component {
             {...props}
             style={{
               backgroundColor: 'transparent',
-              color: '#444'
             }}
             labelStyle={{color: '#444'}}
             indicatorStyle={{backgroundColor: '#444'}}
             />
           }
         />
-      </Container>
+      </View>
     )
   }
 }
