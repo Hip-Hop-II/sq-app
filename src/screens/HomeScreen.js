@@ -57,8 +57,7 @@ class HomeScreen extends Component {
             <TabBar 
             {...props}
             style={{
-              backgroundColor: 'transparent',
-              color: '#444'
+              backgroundColor: 'transparent'
             }}
             labelStyle={{color: '#444'}}
             indicatorStyle={{backgroundColor: '#444'}}
