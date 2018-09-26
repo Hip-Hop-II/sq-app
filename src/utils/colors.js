@@ -12,5 +12,6 @@ export const colors = {
   redLight: '#F03B35',
   grey4: '#a0a0a0',
   blueLight: '#04BBBF',
-  grey5: '#e2e2e2'
+  grey5: '#e2e2e2',
+  redLigter: '#E51D44'
 }
