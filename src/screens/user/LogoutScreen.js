@@ -2,10 +2,14 @@ import React, { Component } from 'react'
 import {
   View,
   StyleSheet,
-  Alert
+  ScrollView,
+  Alert,
+  Text
 } from 'react-native'
-import { Container, Content, Left, Body, Right, Text, Icon, List, ListItem, Button } from 'native-base'
-import colors from '../../utils/colors'
+import Button from '../../components/buttons/Button'
+import { Container, Content, Left, Body, Right, Icon, List, ListItem } from 'native-base'
+import {colors} from '../../utils/colors'
+import {Ionicons} from '@expo/vector-icons'
 
 class LogoutScreen extends Component {
   static navigationOptions = {
@@ -57,28 +61,34 @@ class LogoutScreen extends Component {
   }
   render() {
     return (
-      <Container style={styles.container}>
-        <Content>
-          <View style={styles.caption}>
-            <Icon name="md-alert" style={{color: colors.WARNING, fontSize: 40}} />
-            <Text style={styles.captionText}>注销后，以下信息将清空无法恢复</Text>
-          </View>
-          <View style={styles.list}>
-            {this.renderTextItem()}
-          </View>
-          <View style={styles.logoutButtonWrapper}>
-            <Button full style={styles.logoutButton} onPress={this.logoutHandle}>
-              <Text>注销账号</Text>
-            </Button>
-          </View>
-        </Content>
-      </Container>
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <ScrollView>
+            <View style={styles.caption}>
+              <Ionicons name="md-alert" color={colors.WARNING} size={40} />
+              <Text style={styles.captionText}>注销后，以下信息将清空无法恢复</Text>
+            </View>
+            <View style={styles.list}>
+              {this.renderTextItem()}
+            </View>
+          </ScrollView>
+          <Button style={styles.logoutButton}>
+            <Text style={styles.logoutButtonText}>注销账号</Text>
+          </Button>
+         
+        </View>
+      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    position: 'relative',
+    backgroundColor: colors.WHITE
+  },
+  content: {
     flex: 1
   },
   caption: {
@@ -95,8 +105,8 @@ const styles = StyleSheet.create({
   list: {
     paddingTop: 19,
     paddingLeft: 40,
-    borderBottomWidth: 1,
-    borderTopWidth: 1,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomColor: 'rgba(0, 0, 0, 0.08)',
     borderTopColor: 'rgba(0, 0, 0, 0.08)'
 
@@ -106,12 +116,14 @@ const styles = StyleSheet.create({
     color: colors.GRAY3,
     marginBottom: 20
   },
-  logoutButtonWrapper: {
-    position: 'relative',
-    top: 40,
-  },
   logoutButton: {
-    backgroundColor: colors.GRAY1
+    backgroundColor: colors.greenLight,
+    position: 'absolute',
+    bottom: 40
+  },
+  logoutButtonText: {
+    fontSize: 16,
+    color: colors.WHITE
   }
 })
 
