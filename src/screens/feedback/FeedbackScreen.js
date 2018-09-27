@@ -1,30 +1,89 @@
-import React, { PureComponent } from 'react'
-import { Text, View, ScrollView, TouchableOpacity, StatusBar, StyleSheet, TextInput } from "react-native"
-import { colors } from '../../utils/colors'
-import { Ionicons } from '@expo/vector-icons'
-import {launchImage} from '../../Api/ImagePicker'
+import React, { PureComponent } from "react";
+import {
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  StatusBar,
+  StyleSheet,
+  TextInput,
+  Dimensions
+} from "react-native";
+import { colors } from "../../utils/colors";
+import { Ionicons } from "@expo/vector-icons";
+import { launchImage } from "../../Api/ImagePicker";
+import { Permissions } from "expo";
+import { connectActionSheet } from "@expo/react-native-action-sheet";
+import Button from "../../components/buttons/Button";
 
-const MAX_LENGTH = 200
+const MAX_LENGTH = 200;
 
+const { width: WIDTH } = Dimensions.get("window");
+
+@connectActionSheet
 export default class FeedbackScreen extends PureComponent {
   static navigationOptions = {
     headerStyle: {
       borderBottomWidth: 0
     }
-  }
+  };
   state = {
-    message: ''
-  }
+    message: "",
+    hasCameraPermission: null,
+    onPictue: false
+  };
+  onOpenActionSheet = () => {
+    let options = ["拍摄", "照片", "取消"];
+    let cancelButtonIndex = 2;
+    this.props.showActionSheetWithOptions(
+      {
+        options,
+        cancelButtonIndex
+      },
+      buttonIndex => {
+        if (buttonIndex === 0) {
+          this.cameraImage();
+        } else if (buttonIndex === 1) {
+          this.launchImage();
+        }
+      }
+    );
+  };
+  // 照片
+  launchImage = async () => {
+    try {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status === "granted") {
+        const result = await launchImage();
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
+  // 拍摄
+  cameraImage = async () => {
+    try {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status === "granted") {
+        this.props.navigation.navigate("Camera");
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
   uploadOnPress = async () => {
     try {
-      const result = await launchImage()
-      console.log(result)
-    } catch (error) {
-      
-    }
-  }
+      const { status } = await Permissions.askAsync(Permissions.CAMERA);
+      if (status === "granted") {
+        console.log("success");
+        this.props.navigation.navigate("Camera");
+      }
+      // const result = await launchImage()
+      console.log(result);
+    } catch (error) {}
+  };
   get _maxLength() {
-    return MAX_LENGTH - this.state.message.length
+    return MAX_LENGTH - this.state.message.length;
   }
   render() {
     return (
@@ -46,30 +105,49 @@ export default class FeedbackScreen extends PureComponent {
                 onChangeText={message => this.setState({ message })}
               />
               <View style={styles.limitWrapper}>
-                <Text style={styles.limitText} >还可以输入</Text>
-                <Text style={[styles.limitText, { marginHorizontal: 2 }]} >{this._maxLength}</Text>
-                <Text style={styles.limitText} >字</Text>
+                <Text style={styles.limitText}>还可以输入</Text>
+                <Text style={[styles.limitText, { marginHorizontal: 2 }]}>
+                  {this._maxLength}
+                </Text>
+                <Text style={styles.limitText}>字</Text>
               </View>
             </View>
             <View style={styles.uploadImageWrapper}>
               <View style={styles.uploadImageHeader}>
-                <Text style={[styles.uploadHeaderText, { marginRight: 6 }]}>上传相关问题的截图或照片</Text>
-                <Text style={styles.uploadHeaderText}>(</Text><Text style={styles.uploadHeaderText}>1</Text><Text style={styles.uploadHeaderText}>/3)</Text>
+                <Text style={[styles.uploadHeaderText, { marginRight: 6 }]}>
+                  上传相关问题的截图或照片
+                </Text>
+                <Text style={styles.uploadHeaderText}>(</Text>
+                <Text style={styles.uploadHeaderText}>1</Text>
+                <Text style={styles.uploadHeaderText}>/3)</Text>
               </View>
               <View style={styles.uploadBody}>
-                <TouchableOpacity activeOpacity={.6} onPress={this.uploadOnPress}>
-                  <View style={styles.uploadButtonWrapper}>
-                    <Ionicons name="ios-add-circle-outline"
-                      size={50} color={colors.grey4}
+                <View style={styles.uploadButtonWrapper}>
+                  <TouchableOpacity
+                    activeOpacity={0.6}
+                    onPress={this.onOpenActionSheet}
+                    style={styles.uploadButtonWrapper}
+                  >
+                    <Ionicons
+                      name="ios-add-circle-outline"
+                      size={50}
+                      color={colors.grey4}
                     />
-                  </View>
-                </TouchableOpacity>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>
         </ScrollView>
+        <Button
+          style={styles.button}
+          disabled
+          disabledStyle={styles.buttonDisabled}
+        >
+          <Text style={styles.buttonText}>提交</Text>
+        </Button>
       </View>
-    )
+    );
   }
 }
 
@@ -107,22 +185,22 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   textareaWrapper: {
-    position: 'relative',
-    width: '100%',
+    position: "relative",
+    width: "100%",
     height: 180,
     shadowColor: colors.greenDark,
     shadowOffset: {
       width: 0,
       height: 0
     },
-    shadowOpacity: .1,
+    shadowOpacity: 0.1,
     shadowRadius: 3
   },
   limitWrapper: {
-    position: 'absolute',
+    position: "absolute",
     right: 10,
     bottom: 10,
-    flexDirection: 'row'
+    flexDirection: "row"
   },
   limitText: {
     color: colors.grey4
@@ -131,8 +209,8 @@ const styles = StyleSheet.create({
     paddingTop: 20
   },
   uploadImageHeader: {
-    flexDirection: 'row',
-    alignItems: 'center'
+    flexDirection: "row",
+    alignItems: "center"
   },
   uploadHeaderText: {
     fontSize: 18,
@@ -142,10 +220,27 @@ const styles = StyleSheet.create({
     paddingTop: 20
   },
   uploadButtonWrapper: {
-    width: 120,
-    height: 120,
+    width: WIDTH / 4,
+    height: WIDTH / 4,
     backgroundColor: colors.WHITE,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  button: {
+    position: "absolute",
+    bottom: 60,
+    backgroundColor: colors.redLight,
+    borderWidth: 0
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: colors.WHITE
+  },
+  buttonDisabled: {
+    position: "absolute",
+    bottom: 60,
+    backgroundColor: colors.redDisabled,
+    borderWidth: 0
   }
 });

@@ -42,6 +42,9 @@ const StrokeNavigator = createStackNavigator(
 const FeedbackNavigator = createStackNavigator({
   Feedback: {
     getScreen: () => require('../screens/feedback/FeedbackScreen').default
+  },
+  Camera: {
+    getScreen: () => require('../screens/feedback/CameraScreen').default
   }
 }, {
   navigationOptions: ({navigation}) => ({

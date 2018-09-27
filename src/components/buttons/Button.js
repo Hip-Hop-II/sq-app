@@ -1,17 +1,26 @@
 import React, { PureComponent } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
 import {colors} from '../../utils/colors'
 
 export default class Button extends PureComponent {
   static propTypes = {
     onPress: PropTypes.func,
-    style: PropTypes.any
+    style: PropTypes.any,
+    disabled: PropTypes.bool,
+    disabledStyle: PropTypes.any
   }
   render() {
-    const {onPress, style} = this.props
+    const {onPress, style, disabled, disabledStyle} = this.props
+    if (disabled) {
+      return (
+        <View style={[styles.wrapper, disabled ? disabledStyle : style]}>
+          {this.props.children}
+        </View>
+      )
+    }
     return (
-      <TouchableOpacity onPress={onPress} style={[styles.wrapper, style]}
+      <TouchableOpacity onPress={onPress} style={[styles.wrapper, disabled ? disabledStyle : style]}
       activeOpacity={.6}
       >
         {this.props.children}
