@@ -56,6 +56,10 @@ export default class SigninScreen extends PureComponent {
               onPress={()=>this.loginInMainpage()}>
         <Text style={styles.loginText}>登录</Text>
       </Button>
+      <Text style={styles.tip}>
+        点击登录即表示同意
+        <Text style={styles.clause}>《用户条款》</Text>
+      </Text>
     </View>)
   }
   getCode() {
@@ -104,5 +108,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     alignSelf: 'center',
     color: colors.WHITE
+  },
+  tip: {
+    fontSize: 18,
+    color: colors.GRAY3,
+    justifyContent: 'center',
+  },
+  clause: {
+    color: colors.WARNING
   }
 })
