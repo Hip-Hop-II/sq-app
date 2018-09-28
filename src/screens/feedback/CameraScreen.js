@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react"
-import { Text, View, StyleSheet, StatusBar, TouchableOpacity } from "react-native"
-import { Camera, FileSystem } from "expo"
+import { Text, View, StyleSheet, StatusBar, TouchableOpacity } from 'react-native'
+import { Camera, FileSystem } from 'expo'
 import {Ionicons} from '@expo/vector-icons'
 
 export default class CameraScreen extends PureComponent {
