@@ -5,8 +5,8 @@ import {
   View,
   TextInput
 } from 'react-native'
-import Button from '../../components/buttons/Button'
-import { colors } from '../../utils/colors'
+import Button from '../components/buttons/Button'
+import { colors } from '../utils/colors'
 
 
 export default class SigninScreen extends PureComponent {
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
   item: {
     flexDirection: 'row',
-    alignItems: 'top',
+    alignItems: 'flex-start',
     margin: 10
   },
   textStyle: {
