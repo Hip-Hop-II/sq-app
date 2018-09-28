@@ -19,17 +19,17 @@ export default class SigninScreen extends PureComponent {
   }
   render() {
     return (<View style={styles.container}>
-      <View style={styles.item}>
+      <View style={styles.header}>
         <Text style={styles.title}>验证码登录</Text>
         <Text style={styles.subTitle}>欢迎登录首汽约车</Text>
       </View>
       <View style={styles.item}>
         <Text style={styles.textStyle}>+86 > </Text>
         <TextInput ref="inputLoginName"
-                   autoFocus={true}
+                   autoFocus={false}
                    underlineColorAndroid="gray"
                    placeholder="请输入手机号"
-                   clearTextOnFocus={true}
+                   clearTextOnFocus={false}
                    clearButtonMode="while-editing"
                    style={{flex: 1}}
                    onChangeText={(input) => this.setState({userPhone: input})}>
@@ -46,7 +46,7 @@ export default class SigninScreen extends PureComponent {
                    onChangeText={(input) => this.setState({userCode: input})}>
 
         </TextInput>
-        <Button underlayColor='transparent'
+        <Button style={styles.code} underlayColor='transparent'
                 onPress={()=>this.getCode()}>
           <Text style={styles.loginText}>获取验证码</Text>
         </Button>
@@ -78,11 +78,17 @@ export default class SigninScreen extends PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'flex-start',
+    paddingLeft: 20,
+  },
+  header: {
+    marginTop: 100,
+    marginBottom: 80,
   },
   title: {
     fontSize: 28,
     color: colors.GRAY2,
+    marginBottom: 10,
   },
   subTitle: {
     fontSize: 18,
@@ -91,12 +97,16 @@ const styles = StyleSheet.create({
   item: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    margin: 10
+    margin: 10,
+    marginBottom: 30,
   },
   textStyle: {
     fontSize: 18,
     color: colors.GRAY2,
     marginRight: 10
+  },
+  code: {
+    width:150,
   },
   login: {
     height: 40,
@@ -111,6 +121,7 @@ const styles = StyleSheet.create({
   },
   tip: {
     fontSize: 18,
+    textAlign: 'center',
     color: colors.GRAY3,
     justifyContent: 'center',
   },
