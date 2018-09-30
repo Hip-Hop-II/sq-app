@@ -66,9 +66,9 @@ const UserNavigator = createStackNavigator(
         header: null
       }
     },
-    // User: {
-    //   getScreen: () => require("../screens/UserScreen").default
-    // },
+    User: {
+      getScreen: () => require("../screens/UserScreen").default
+    },
     Setting: {
       getScreen: () => require("../screens/user/SettingScreen").default
     },
@@ -99,15 +99,15 @@ const UserNavigator = createStackNavigator(
 );
 
 const MainNavigator = createStackNavigator({
+  Home: {
+    getScreen: () => require("../screens/HomeScreen").default
+  },
   User: {
     screen: UserNavigator,
     navigationOptions: {
       header: null
     }
   },
-  Home: {
-    getScreen: () => require("../screens/HomeScreen").default
-  }
 });
 
 export default (App = createSwitchNavigator(
