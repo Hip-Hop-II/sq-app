@@ -25,6 +25,14 @@
       "config": {
         "googleMapsApiKey": "AIzaSyClIz5BFlPrBPj2ZO_s2AIPMHPcTBX50qU"
       }
+    },
+    "android": {
+      "package": "ca.brentvatne.growlerprowler",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyClIz5BFlPrBPj2ZO_s2AIPMHPcTBX50qU"
+        }
+      }
     }
   }
 }
