@@ -27,7 +27,7 @@ export default class SigninScreen extends PureComponent {
         <Text style={styles.textStyle}>+86 > </Text>
         <TextInput ref="inputLoginName"
                    autoFocus={false}
-                   underlineColorAndroid="gray"
+                   underlineColorAndroid="transparent"
                    placeholder="请输入手机号"
                    clearTextOnFocus={false}
                    clearButtonMode="while-editing"
@@ -38,7 +38,7 @@ export default class SigninScreen extends PureComponent {
       </View>
       <View style={styles.item}>
         <TextInput ref="inputLoginPwd"
-                   underlineColorAndroid="gray"
+                   underlineColorAndroid="transparent"
                    placeholder="请输入短信码"
                    clearTextOnFocus={true}
                    clearButtonMode="while-editing"
@@ -48,7 +48,7 @@ export default class SigninScreen extends PureComponent {
         </TextInput>
         <Button style={styles.code} underlayColor='transparent'
                 onPress={()=>this.getCode()}>
-          <Text style={styles.loginText}>获取验证码</Text>
+          <Text style={styles.codeText}>获取验证码</Text>
         </Button>
       </View>
       <Button style={styles.login}
@@ -82,17 +82,17 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
   header: {
-    marginTop: 100,
-    marginBottom: 80,
+    marginTop: 50,
+    marginBottom: 50,
   },
   title: {
-    fontSize: 28,
-    color: colors.GRAY2,
+    fontSize: 32,
+    color: colors.greyDark,
     marginBottom: 10,
   },
   subTitle: {
-    fontSize: 18,
-    color: colors.GRAY3,
+    fontSize: 14,
+    color: colors.grey4,
   },
   item: {
     flexDirection: 'row',
@@ -107,6 +107,15 @@ const styles = StyleSheet.create({
   },
   code: {
     width:150,
+    height: 30,
+    backgroundColor: colors.redLigter,
+    justifyContent: 'center',
+    borderWidth: 0,
+  },
+  codeText: {
+    fontSize: 14,
+    alignSelf: 'center',
+    color: colors.WHITE,
   },
   login: {
     height: 40,
@@ -115,12 +124,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   loginText: {
-    fontSize: 20,
+    fontSize: 16,
     alignSelf: 'center',
     color: colors.WHITE
   },
   tip: {
-    fontSize: 18,
+    fontSize: 12,
     textAlign: 'center',
     color: colors.GRAY3,
     justifyContent: 'center',
